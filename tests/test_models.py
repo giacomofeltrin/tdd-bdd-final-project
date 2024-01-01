@@ -30,6 +30,9 @@ from decimal import Decimal
 from service.models import Product, Category, db
 from service import app
 from tests.factories import ProductFactory
+import unittest
+from unittest.mock import patch
+from service import app
 
 DATABASE_URI = os.getenv(
     "DATABASE_URI", "postgresql://postgres:postgres@localhost:5432/postgres"
@@ -189,3 +192,49 @@ class TestProductModel(unittest.TestCase):
         self.assertEqual(found.count(), count)
         for product in found:
             self.assertEqual(product.category, category)
+
+
+
+
+
+
+
+
+
+
+def test_flask_app_created():
+    """It should create a Flask app"""
+    from service import app
+    assert app is not None
+
+
+
+
+# Add this to your test_models.py file
+
+def test_log_handlers_imported():
+    """It should import log_handlers module"""
+    from service.common import log_handlers
+    assert log_handlers is not None
+
+
+# Add this to your test_models.py file
+
+def test_status_module():
+    """It should import status module"""
+    from service.common import status
+    assert status is not None
+
+
+# Add this to your test_models.py file
+
+def test_request_validation_error_handler():
+    """It should handle DataValidationError"""
+    from service.common.error_handlers import request_validation_error
+    from service.models import DataValidationError
+    error = DataValidationError("Validation error")
+    response, status_code = request_validation_error(error)
+    assert response is not None
+    assert status_code == 400
+
+# Similarly, add tests for other error handlers (bad_request, not_found, method_not_supported, mediatype_not_supported, internal_server_error)
